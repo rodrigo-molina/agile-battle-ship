@@ -23,7 +23,7 @@ object Server extends App {
     val route: Route = ShipsApi(shipsService).route
 
     val bindingFuture = Http().bindAndHandle(route, ServerConfiguration.host, ServerConfiguration.port)
-    println(s"Server online at http://localhost:8080/\nPress RETURN to stop...")
+    println(s"Server online at ${ServerConfiguration.host}:${ServerConfiguration.port}\nPress RETURN to stop...")
     StdIn.readLine() // let it run until user presses return
     bindingFuture
       .flatMap(_.unbind()) // trigger unbinding from the port
