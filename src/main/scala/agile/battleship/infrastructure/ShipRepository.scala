@@ -1,3 +1,7 @@
+package agile.battleship.infrastructure
+
+import agile.battleship.core.domain.Ship
+
 trait Ships {
   def getShips(): List[Ship]
 }

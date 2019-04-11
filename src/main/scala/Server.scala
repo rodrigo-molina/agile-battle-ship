@@ -1,3 +1,5 @@
+import agile.battleship.core.ShipsService
+import agile.battleship.infrastructure.{ShipRepository, Ships, ShipsApi}
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Route

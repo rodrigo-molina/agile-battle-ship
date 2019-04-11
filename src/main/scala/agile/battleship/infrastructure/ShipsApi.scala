@@ -1,3 +1,7 @@
+package agile.battleship.infrastructure
+
+import agile.battleship.core.ShipsService
+import agile.battleship.core.domain.Ship
 import akka.actor.ActorSystem
 import akka.http.scaladsl.marshallers.sprayjson.SprayJsonSupport
 import akka.http.scaladsl.model.Uri.Path
@@ -10,7 +14,6 @@ import spray.json.DefaultJsonProtocol
 
 
 trait JsonSupport extends SprayJsonSupport with DefaultJsonProtocol {
-//  implicit val shipIdFormat = jsonFormat2(ShipId)
   implicit val shipFormat = jsonFormat2(Ship)
 }
 
