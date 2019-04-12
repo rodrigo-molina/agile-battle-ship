@@ -1,9 +1,10 @@
 import agile.battleship.core.ShipsService
-import agile.battleship.infrastructure.{ShipRepository, Ships, ShipsApi}
+import agile.battleship.infrastructure.{GamesApi, ShipRepository, Ships, ShipsApi}
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.server.Route
 import akka.stream.ActorMaterializer
+import akka.http.scaladsl.server.Directives._
 
 import scala.io.StdIn
 
@@ -22,9 +23,11 @@ object Server extends App {
 
     val shipsRepository: Ships = new ShipRepository()
     val shipsService: ShipsService = ShipsService(shipsRepository)
-    val route: Route = ShipsApi(shipsService).route
+    val shipsRoute: Route = ShipsApi(shipsService).route
+    val gamesRoute: Route = GamesApi().route
 
-    val bindingFuture = Http().bindAndHandle(route, ServerConfiguration.host, ServerConfiguration.port)
+    val routes = shipsRoute ~ gamesRoute
+    val bindingFuture = Http().bindAndHandle(routes, ServerConfiguration.host, ServerConfiguration.port)
 
     println(s"Server online at ${ServerConfiguration.host}:${ServerConfiguration.port}\nPress RETURN to stop...")
     StdIn.readLine() // let it run until user presses return
