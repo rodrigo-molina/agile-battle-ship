@@ -1,26 +1,10 @@
 package agile.battleship
 
-import akka.actor.ActorSystem
-import akka.http.scaladsl.Http
-import akka.stream.ActorMaterializer
+import agile.battleship.utils.BaseAcceptanceTest
 import com.github.agourlay.cornichon.CornichonFeature
 
-import scala.concurrent.Future
 
-
-class GamesFeature extends CornichonFeature {
-
-
-  val serverHost = "localhost"
-  val serverPort = 9090
-
-  val currentEndpoint = s"http://${serverHost}:${serverPort}"
-
-  implicit val sys = ActorSystem()
-  implicit val mat = ActorMaterializer()
-  val serverActions = new ServerActions()
-  val bindingServerFuture: Future[Http.ServerBinding] = serverActions.startServer(serverHost, serverPort)
-
+class GamesFeature extends CornichonFeature with BaseAcceptanceTest {
 
   def feature = Feature("Get Games") {
 
@@ -29,9 +13,14 @@ class GamesFeature extends CornichonFeature {
       When I get(s"${currentEndpoint}/games")
 
       Then assert status.is(200)
+      Then assert body.is("games api !")
     }
   }
 
+  beforeFeature {
+    bindingServerFuture
+    println("start server")
+  }
 
   afterFeature {
     println("stop server")
