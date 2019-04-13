@@ -1,3 +1,5 @@
+package agile.battleship
+
 import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
 

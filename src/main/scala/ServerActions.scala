@@ -1,3 +1,5 @@
+package agile.battleship
+
 import agile.battleship.core.ShipsService
 import agile.battleship.infrastructure.{GamesApi, ShipRepository, Ships, ShipsApi}
 import akka.actor.ActorSystem
@@ -8,9 +10,7 @@ import akka.stream.ActorMaterializer
 
 import scala.concurrent.Future
 
-
-
-class ServerActions()(implicit val system: ActorSystem, implicit  val materializer: ActorMaterializer) {
+class ServerActions(implicit val system: ActorSystem, implicit val materializer: ActorMaterializer) {
 
   def startServer(host: String, port: Int): Future[Http.ServerBinding] = {
     val shipsRepository: Ships = new ShipRepository()
